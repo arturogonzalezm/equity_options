@@ -4,3 +4,6 @@ scipy
 pandas
 streamlit
 pytest
+ruff
+codecov
+pytest-cov
