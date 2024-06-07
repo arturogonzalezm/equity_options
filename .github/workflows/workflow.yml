@@ -1,4 +1,4 @@
-name: Codecov
+name: Code Analysis and Coverage
 
 on:
   push:
@@ -9,7 +9,30 @@ on:
       - master
 
 jobs:
-  build:
+  pylint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Install Pylint
+        run: |
+          pip install pylint
+      - name: Code Review Scoring
+        run: |
+          find . -name '*.py' -not -path './.venv/*' -print -exec pylint {} \;
+      - name: Analysing the code with Pylint
+        run: |
+          pylint $(find . -name '*.py' -not -path './.venv/*') --fail-under=8.0
+
+  codecov:
+    needs: pylint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
