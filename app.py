@@ -1,3 +1,7 @@
+"""
+Streamlit app to calculate option prices and greeks using the Black-Scholes Model
+"""
+
 import streamlit as st
 import pandas as pd
 import yfinance as yf

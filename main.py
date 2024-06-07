@@ -1,4 +1,6 @@
-# main.py
+"""
+This script is the entry point for the application. It retrieves stock data and calculates option prices and Greeks.
+"""
 from backend.config import stock_symbol, call_symbols, put_symbols, risk_free_rate
 from backend.option_pricing import OptionPricing
 from backend.singleton_logger import logger
