@@ -104,6 +104,16 @@ classDiagram
     }
 ```
 
+### Math Explanation
+
+```latex
+$C = S_0 \Phi(d_1) - X e^{-rT} \Phi(d_2)$
+$P = X e^{-rT} \Phi(-d_2) - S_0 \Phi(-d_1)$
+
+$d_1 = \frac{\ln(S_0 / X) + (r + \sigma^2 / 2)T}{\sigma \sqrt{T}}$
+$d_2 = d_1 - \sigma \sqrt{T}$
+```
+
 ### Explanation
 
 - **Installation**: Provides step-by-step instructions for setting up the project.
