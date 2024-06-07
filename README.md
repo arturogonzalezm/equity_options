@@ -1,3 +1,6 @@
+[![codecov](https://codecov.io/gh/arturogonzalezm/equity_options/graph/badge.svg?token=YEtCcH8NcL)](https://codecov.io/gh/arturogonzalezm/equity_options)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # Option Pricing Calculator
 
 This project provides an implementation of an option pricing calculator using the Black-Scholes model. It includes classes for call and put options, an abstract `Option` class, and functionality to retrieve stock and option data from Yahoo Finance. The project also includes unit tests using `pytest`.
