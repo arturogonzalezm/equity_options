@@ -8,7 +8,9 @@ This project provides an implementation of an option pricing calculator using th
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Testing](#testing)
-- [Contributing](#contributing)
+- [Class Diagram](#class-diagram)
+- [Math Explanation](#math-explanation)
+- [Explanation](#explanation)
 - [License](#license)
 
 ## Installation
@@ -26,7 +28,23 @@ This project provides an implementation of an option pricing calculator using th
     python.exe -m pip install -r .\requirements.txt
     ```
    
-3. Project Structure:
+## Usage
+
+1. Run the Streamlit application:
+   ```sh
+   streamlit run app.py
+   ```
+   
+2. Enter the stock symbol, risk-free rate, and option expiry date.
+3. Click the "Calculate" button to retrieve the option prices and Greeks.
+4. View the calculated option prices and Greeks in the table.
+5. Click the "Download" button to save the results as a CSV file.
+6. Click the "Plot" button to display a plot of the option prices and Greeks.
+7. Click the "Reset" button to clear the input fields and results.
+8. Click the "Toggle Log" button to show or hide the log messages.
+9. Click the "Clear Log" button to clear the log messages.
+
+## Project Structure
 
     ```sh
     equity_options/
@@ -54,6 +72,14 @@ This project provides an implementation of an option pricing calculator using th
                ├── requirements.txt
                └── README.md
     ```
+
+## Testing
+
+Run the unit tests using `pytest`:
+
+```sh
+pytest
+```
 
 ## Class Diagram
 
@@ -124,4 +150,11 @@ $d_2 = d_1 - \sigma \sqrt{T}$
 - **License**: States the project's license.
 
 Feel free to adjust the content based on your project's specifics, such as the repository URL and any additional setup steps.
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 
