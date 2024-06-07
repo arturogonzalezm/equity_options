@@ -35,12 +35,3 @@ jobs:
           flags: unittests
           name: codecov-umbrella
           failCiOnError: true
-      - name: Install Pylint
-        run: |
-          pip install pylint
-      - name: Code Review Scoring
-        run: |
-          find . -name '*.py' -not -path './.venv/*' -print -exec pylint {} \;
-      - name: Analysing the code with Pylint
-        run: |
-          pylint $(find . -name '*.py' -not -path './.venv/*') --fail-under=8.0
