@@ -1,23 +1,31 @@
 """
-This script is the entry point for the application. It retrieves stock data and calculates option prices and Greeks.
+This script demonstrates how to use the OptionsFacade class to retrieve options data for a given symbol.
 """
-from backend.config import stock_symbol, call_symbols, put_symbols, risk_free_rate
-from backend.option_pricing import OptionPricing
+
+from backend.options_facade import OptionsFacade
 from backend.singleton_logger import logger
 
 
 def main():
-    option_pricing = OptionPricing(stock_symbol, call_symbols, put_symbols, risk_free_rate)
-    option_pricing.retrieve_stock_data()
+    """
+    Main function to demonstrate how to use the OptionsFacade class to retrieve options data for a given symbol.
+    :return: None
+    """
+    symbol = "AAPL"
+    options_facade = OptionsFacade(symbol)
 
-    try:
-        call_df, put_df = option_pricing.calculate_option_prices_and_greeks()
-        logger.info("Call Options:")
-        logger.info("\n" + call_df.to_string())
-        logger.info("Put Options:")
-        logger.info("\n" + put_df.to_string())
-    except Exception as e:
-        logger.error(f"Error calculating option prices and Greeks: {e}")
+    # Get available expiration dates
+    expiration_dates = options_facade.get_expiration_dates()
+
+    # Iterate through each expiration date and retrieve options data
+    for expiration_date in expiration_dates:
+        options_data = options_facade.get_options_data(expiration_date)
+
+        logger.info(f"Call Options for {symbol} expiring on {expiration_date}:")
+        logger.info(options_data['calls'])
+
+        logger.info(f"\nPut Options for {symbol} expiring on {expiration_date}:")
+        logger.info(options_data['puts'])
 
 
 if __name__ == "__main__":

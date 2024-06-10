@@ -1,4 +1,0 @@
-stock_symbol = "AAPL"
-call_symbols = ["AAPL240607C00100000", "AAPL240607C00110000", "AAPL240607C00120000"]
-put_symbols = ["AAPL240607P00100000", "AAPL240607P00105000", "AAPL240607P00110000"]
-risk_free_rate = 0.01  # Assumed risk-free rate

@@ -1,17 +1,27 @@
+"""
+Test the SingletonLogger class.
+"""
+
 import pytest
 import logging
 from backend.singleton_logger import SingletonLogger
 
 
 def test_singleton_instance():
-    # Ensure that SingletonLogger returns the same instance
+    """
+    Test that the SingletonLogger class returns the same instance when called multiple times.
+    :return: None
+    """
     logger1 = SingletonLogger().get_logger()
     logger2 = SingletonLogger().get_logger()
     assert logger1 is logger2
 
 
 def test_logger_initialization():
-    # Ensure that the logger is initialized with the correct level and format
+    """
+    Test that the logger is initialized correctly with the default settings.
+    :return: None
+    """
     logger = SingletonLogger().get_logger()
     assert logger.level == logging.DEBUG
 
@@ -28,7 +38,10 @@ def test_logger_initialization():
 
 
 def test_logger_name():
-    # Ensure that the logger name is set correctly
+    """
+    Test that the logger name is set correctly.
+    :return: None
+    """
     SingletonLogger._instance = None  # Reset singleton instance
     logger_instance = SingletonLogger(logger_name="test_logger")
     logger = logger_instance.get_logger()
@@ -36,7 +49,10 @@ def test_logger_name():
 
 
 def test_logger_custom_format():
-    # Ensure that a custom log format is applied correctly
+    """
+    Test that the logger is initialized with a custom format.
+    :return:
+    """
     SingletonLogger._instance = None  # Reset singleton instance
     custom_format = "%(levelname)s: %(message)s"
     logger_instance = SingletonLogger(log_format=custom_format)
