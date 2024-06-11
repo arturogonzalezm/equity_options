@@ -51,26 +51,16 @@ This project provides an implementation of an option pricing calculator using th
 ## Project Structure
 
 ```sh
-equity_options/
+option-pricing-calculator/
 │
 ├── backend/
 │   ├── __init__.py
-│   ├── black_scholes.py
-│   ├── call_option.py
-│   ├── put_option.py
-│   ├── option.py
-│   ├── option_pricing.py
-│   ├── option_factory.py
+│   ├── options_facade.py
 │   └── singleton_logger.py
 │
 ├── tests/
 │   ├── __init__.py
-│   ├── test_black_scholes.py
-│   ├── test_call_option.py
-│   ├── test_put_option.py
-│   ├── test_option.py
-│   ├── test_option_pricing.py
-│   └── test_singleton_logger.py
+│   ├── test_options_facade.py
 │
 ├── app.py
 ├── requirements.txt
