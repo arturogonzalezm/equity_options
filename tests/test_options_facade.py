@@ -3,7 +3,7 @@ This module contains unit tests for the OptionsFacade class.
 """
 
 import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 import pandas as pd
 from backend.options_facade import OptionsFacade
 
