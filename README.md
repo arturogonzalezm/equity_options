@@ -2,51 +2,65 @@
 [![PyLint](https://github.com/arturogonzalezm/equity_options/actions/workflows/workflow.yml/badge.svg)](https://github.com/arturogonzalezm/equity_options/actions/workflows/workflow.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 
-# Option Pricing Calculator
+# Binomial Option Pricing Model
 
-This project provides an implementation of an option pricing calculator using the Black-Scholes model. It includes classes for call and put options, an abstract `Option` class, and functionality to retrieve stock and option data from Yahoo Finance. The project also includes unit tests using `pytest`.
+This repository contains the implementation of the Binomial Option Pricing Model for calculating the price of European call and put options. It also includes functionality to calculate the Greeks (Delta, Gamma, Vega, Theta, Rho) of the options.
 
-## Table of Contents
+## BinomialOptionPricing Class
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Testing](#testing)
-- [Class Diagram](#class-diagram)
-- [Math Explanation](#math-explanation)
-- [Explanation](#explanation)
-- [License](#license)
+The `BinomialOptionPricing` class is used to calculate the price of a European call or put option using the binomial tree model. It also provides methods to calculate the Greeks of the option.
 
-## Installation
+### Initialization
 
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/arturogonzalezm/equity_options.git
-   cd equity_options
-    ```
-   
-2. Install the required packages:
+The class is initialized with the following parameters:
+- `stock_price`: The current price of the underlying stock.
+- `strike_price`: The strike price of the option.
+- `time_to_expiry`: The time to expiry of the option in years.
+- `risk_free_rate`: The risk-free interest rate.
+- `volatility`: The volatility of the underlying stock.
+- `steps`: The number of steps in the binomial tree.
+- `option_type`: The type of the option ("call" or "put").
 
-    ```sh
-    python.exe -m pip install --upgrade pip
-    python.exe -m pip install -r .\requirements.txt
-    ```
-   
-## Usage
+### Methods
 
-1. Run the Streamlit application:
-   ```sh
-   streamlit run app.py
-   ```
-   
-2. Enter the stock symbol, risk-free rate, and option expiry date.
-3. Click the "Calculate" button to retrieve the option prices and Greeks.
-4. View the calculated option prices and Greeks in the table.
-5. Click the "Download" button to save the results as a CSV file.
-6. Click the "Plot" button to display a plot of the option prices and Greeks.
-7. Click the "Reset" button to clear the input fields and results.
-8. Click the "Toggle Log" button to show or hide the log messages.
-9. Click the "Clear Log" button to clear the log messages.
+#### `binomial_tree`
+
+Calculates the price of the option using the binomial tree model.
+
+```python
+def binomial_tree(self, stock_price=None, strike_price=None, time_to_expiry=None, risk_free_rate=None, volatility=None, steps=None):
+    # Parameters are optional, if not provided the class attributes will be used.
+    # Calculate the necessary parameters for the binomial model.
+    dt = time_to_expiry / steps
+    u = np.exp(volatility * np.sqrt(dt))
+    d = 1 / u
+    q = (np.exp(risk_free_rate * dt) - d) / (u - d)
+
+    # Initialize asset prices at maturity
+    asset_prices = np.zeros(steps + 1)
+    for i in range(steps + 1):
+        asset_prices[i] = stock_price * (u ** (steps - i)) * (d ** i)
+
+    # Initialize option values at maturity
+    option_values = np.zeros(steps + 1)
+    for i in range(steps + 1):
+        if self.option_type == "call":
+            option_values[i] = max(0, asset_prices[i] - strike_price)
+        else:
+            option_values[i] = max(0, strike_price - asset_prices[i])
+
+    # Backward induction
+    for step in range(steps - 1, -1, -1):
+        for i in range(step + 1):
+            option_values[i] = np.exp(-risk_free_rate * dt) * (q * option_values[i] + (1 - q) * option_values[i + 1])
+            asset_prices[i] = asset_prices[i] / u
+            if self.option_type == "call":
+                option_values[i] = max(option_values[i], asset_prices[i] - strike_price)
+            else:
+                option_values[i] = max(option_values[i], strike_price - asset_prices[i])
+
+    return option_values[0]
+```
 
 ## Project Structure
 
@@ -79,71 +93,48 @@ pytest
 
 ```mermaid
 classDiagram
-    class Option {
-        <<abstract>>
-        - stock_price: float
-        - strike_price: float
-        - time_to_expiry: float
-        - risk_free_rate: float
-        - implied_volatility: float
-        + calculate_price_and_greeks()*
+    class BinomialOptionPricing {
+        +float stock_price
+        +float strike_price
+        +float time_to_expiry
+        +float risk_free_rate
+        +float volatility
+        +int steps
+        +str option_type
+
+        +BinomialOptionPricing(float stock_price, float strike_price, float time_to_expiry, float risk_free_rate, float volatility, int steps, str option_type)
+        +float binomial_tree(float stock_price=None, float strike_price=None, float time_to_expiry=None, float risk_free_rate=None, float volatility=None, int steps=None)
+        +tuple~float, float, float, float, float~ calculate_greeks()
     }
 
-    Option <|-- CallOption
-    Option <|-- PutOption
-    OptionFactory --> CallOption
-    OptionFactory --> PutOption
-
-    class CallOption {
-        + calculate_price_and_greeks()
+    class pytest_fixture {
+        +call_option() : BinomialOptionPricing
+        +put_option() : BinomialOptionPricing
     }
 
-    class PutOption {
-        + calculate_price_and_greeks()
+    class test_binomial_tree {
+        +test_binomial_tree_call(call_option)
+        +test_binomial_tree_put(put_option)
     }
 
-    class OptionFactory {
-        + create_option(option_type: str, stock_price: float, strike_price: float, time_to_expiry: float, risk_free_rate: float, implied_volatility: float) Option
+    class test_calculate_greeks {
+        +test_calculate_greeks_call(call_option)
+        +test_calculate_greeks_put(put_option)
     }
 
-    class OptionPricing {
-        - stock_symbol: str
-        - risk_free_rate: float
-        - stock_price: float
-        - call_options: DataFrame
-        - put_options: DataFrame
-        + retrieve_stock_data()
-        + retrieve_option_symbols()
-        + calculate_option_prices_and_greeks()
-    }
+    pytest_fixture --> BinomialOptionPricing : creates
+    test_binomial_tree --> BinomialOptionPricing : uses
+    test_calculate_greeks --> BinomialOptionPricing : uses
 
-    class SingletonLogger {
-        - _instance: SingletonLogger
-        - _lock: RLock
-        + get_logger() Logger
-    }
 ```
 
-### Math Explanation
 
-```latex
-$C = S_0 \Phi(d_1) - X e^{-rT} \Phi(d_2)$
-$P = X e^{-rT} \Phi(-d_2) - S_0 \Phi(-d_1)$
+### Summary
 
-$d_1 = \frac{\ln(S_0 / X) + (r + \sigma^2 / 2)T}{\sigma \sqrt{T}}$
-$d_2 = d_1 - \sigma \sqrt{T}$
-```
+- The `BinomialOptionPricing` class provides methods to calculate the price and Greeks of European options using the binomial tree model.
+- Unit tests are written using `pytest` to ensure the correctness of the implementation.
+- The README file explains the class, its methods, and how to run the tests.
 
-### Explanation
-
-- **Installation**: Provides step-by-step instructions for setting up the project.
-- **Usage**: Describes how to run the application using Streamlit.
-- **Project Structure**: Lists the directory structure of the project.
-- **Testing**: Explains how to run the unit tests using `pytest`.
-- **Contributing**: Provides guidelines for contributing to the project.
-- **License**: States the project's license.
-
-Feel free to adjust the content based on your project's specifics, such as the repository URL and any additional setup steps.
 
 ---
 
