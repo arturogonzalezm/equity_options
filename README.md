@@ -21,6 +21,11 @@ The class is initialized with the following parameters:
 - `steps`: The number of steps in the binomial tree.
 - `option_type`: The type of the option ("call" or "put").
 
+```bash
+streamlit run app.py
+```
+  
+
 ### Methods
 
 #### `binomial_tree`
