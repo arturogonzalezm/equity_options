@@ -156,6 +156,11 @@ classDiagram
 - The `TestBinomialOptionPricing` class uses the `TestFixtures` class to get instances of `BinomialOptionPricing` for testing.
 - The `TestFixtures` class creates instances of `BinomialOptionPricing`.
 
+![1](resources/images/1.png)
+![2](resources/images/2.png)
+![3](resources/images/3.png)
+
+
 
 ### Summary
 
