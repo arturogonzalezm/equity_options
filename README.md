@@ -128,6 +128,21 @@ classDiagram
 
 ```
 
+### Explanation
+
+- **BinomialOptionPricing**: The main class responsible for calculating the price and Greeks of an option using the binomial tree model.
+  - Attributes: `stock_price`, `strike_price`, `time_to_expiry`, `risk_free_rate`, `volatility`, `steps`, `option_type`.
+  - Methods: `__init__`, `binomial_tree`, `calculate_greeks`.
+
+- **TestBinomialOptionPricing**: The test class that contains the unit tests for the `BinomialOptionPricing` class.
+  - Methods: `test_binomial_tree_call`, `test_binomial_tree_put`, `test_calculate_greeks_call`, `test_calculate_greeks_put`.
+
+- **TestFixtures**: A helper class that provides fixtures for the unit tests.
+  - Methods: `call_option`, `put_option`.
+
+- The `TestBinomialOptionPricing` class uses the `TestFixtures` class to get instances of `BinomialOptionPricing` for testing.
+- The `TestFixtures` class creates instances of `BinomialOptionPricing`.
+
 
 ### Summary
 
