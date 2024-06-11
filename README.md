@@ -1,6 +1,6 @@
 [![codecov](https://codecov.io/gh/arturogonzalezm/equity_options/graph/badge.svg?token=YEtCcH8NcL)](https://codecov.io/gh/arturogonzalezm/equity_options)
 [![PyLint](https://github.com/arturogonzalezm/equity_options/actions/workflows/workflow.yml/badge.svg)](https://github.com/arturogonzalezm/equity_options/actions/workflows/workflow.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 
 # Option Pricing Calculator
 
