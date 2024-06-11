@@ -3,7 +3,7 @@ This module contains unit tests for the OptionsFacade class.
 """
 
 import pytest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 import pandas as pd
 from backend.options_facade import OptionsFacade
 
@@ -42,8 +42,8 @@ mock_put_options = pd.DataFrame({
 @patch('backend.options_facade.yf.Ticker')
 def test_get_expiration_dates(mock_ticker):
     """
-    Test get_expiration_dates method of OptionsFacade
-    :param mock_ticker: Mock Ticker object
+    Test get_expiration_dates method of OptionsFacade class.
+    :param mock_ticker: Mock of the Ticker class.
     :return: None
     """
     mock_ticker_instance = mock_ticker.return_value
@@ -58,8 +58,8 @@ def test_get_expiration_dates(mock_ticker):
 @patch('backend.options_facade.yf.Ticker')
 def test_get_options_data(mock_ticker):
     """
-    Test get_options_data method of OptionsFacade
-    :param mock_ticker: Mock Ticker object
+    Test get_options_data method of OptionsFacade class.
+    :param mock_ticker: Mock of the Ticker class.
     :return: None
     """
     mock_ticker_instance = mock_ticker.return_value
