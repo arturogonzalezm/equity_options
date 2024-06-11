@@ -22,6 +22,14 @@ The class is initialized with the following parameters:
 - `option_type`: The type of the option ("call" or "put").
 
 ```bash
+python -m pip install --upgrade pip
+```
+
+```bash
+pip install -r requirements.txt
+```
+
+```bash
 streamlit run app.py
 ```
   
