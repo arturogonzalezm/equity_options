@@ -51,7 +51,7 @@ This project provides an implementation of an option pricing calculator using th
 ## Project Structure
 
 ```sh
-option-pricing-calculator/
+equity_options/
 │
 ├── backend/
 │   ├── __init__.py
